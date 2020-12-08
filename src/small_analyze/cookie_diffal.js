@@ -5,7 +5,7 @@ const filenamifyUrl = require('filenamify-url');
 const puppeteer = require('puppeteer');
 
 // require('dotenv').config({path: process.cwd() + '/../.env'})
-const data_dir = './tmp_crawl/';
+const data_dir = process.cwd() + '../' + './tmp_crawl/';
 console.log('Outout to: ' + data_dir);
 fs.ensureDirSync(data_dir);
 
