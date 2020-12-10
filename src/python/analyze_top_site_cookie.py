@@ -1,10 +1,6 @@
 #%%
 # -*- coding: utf-8 -*-
-"""
-Spyder Editor
-
-This is a temporary script file.
-"""
+""" Analyze cookies of top sites. """
 from collections import defaultdict
 import json
 
@@ -51,11 +47,15 @@ site_cookie_df.to_csv(out_file, sep='\t')
 print('Written to', out_file)
 
 #%%
+num_websites = site_cookie_df.website.nunique()
+print('Num websites:', num_websites)
+
+#%%
 cookie_domain_to_sites = defaultdict(list)
 for _, row in site_cookie_df.iterrows():
     for cookie_domain in row['cookie_domains']:
         cookie_domain_to_sites[cookie_domain].append(row['website'])
-cookie_site_data = [{'cookie_domain': k, 'websites': v, 'num_websites': len(v)} for k, v in cookie_domain_to_sites.items()]
+cookie_site_data = [{'cookie_domain': k, 'websites': v, 'num_websites': len(v), 'percent_websites': len(v) / num_websites} for k, v in cookie_domain_to_sites.items()]
 cookie_site_df = pd.DataFrame(cookie_site_data).sort_values(by=['num_websites'], ascending=False)
 print(cookie_site_df)
 
